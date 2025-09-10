@@ -2,9 +2,43 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 
 const FeaturesSection: React.FC = () => {
   const { t } = useLanguage();
+  const { elementRef, animationClasses } = useScrollAnimation({ delay: 0.5 });
+  
+  // Create animation hooks for features at the top level
+  const { elementRef: feature1Ref, animationClasses: feature1AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 1 
+  });
+  const { elementRef: feature2Ref, animationClasses: feature2AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 2 
+  });
+  const { elementRef: feature3Ref, animationClasses: feature3AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 3 
+  });
+  const { elementRef: feature4Ref, animationClasses: feature4AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 4 
+  });
+  const { elementRef: feature5Ref, animationClasses: feature5AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 5 
+  });
+  const { elementRef: feature6Ref, animationClasses: feature6AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 6 
+  });
 
   const features = [
     {
@@ -66,7 +100,10 @@ const FeaturesSection: React.FC = () => {
   return (
     <section className="py-12 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div 
+          ref={elementRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${animationClasses}`}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             {t('home.features.title')}
           </h2>
@@ -76,22 +113,28 @@ const FeaturesSection: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <div 
-              key={index}
-              className="bg-gray-50 hover:bg-sky-50 p-8 rounded-xl transition-colors duration-200 border border-gray-100 hover:border-sky-200 group"
-            >
-              <div className="w-12 h-12 bg-sky-100 rounded-lg mb-4 group-hover:bg-sky-200 transition-colors duration-200 flex items-center justify-center">
-                {feature.icon}
+          {features.map((feature, index) => {
+            const featureRefs = [feature1Ref, feature2Ref, feature3Ref, feature4Ref, feature5Ref, feature6Ref];
+            const featureAnimationClasses = [feature1AnimationClasses, feature2AnimationClasses, feature3AnimationClasses, feature4AnimationClasses, feature5AnimationClasses, feature6AnimationClasses];
+            
+            return (
+              <div 
+                key={index}
+                ref={featureRefs[index]}
+                className={`bg-gray-50 hover:bg-sky-50 p-8 rounded-xl transition-all duration-1000 ease-out border border-gray-100 hover:border-sky-200 group ${featureAnimationClasses[index]}`}
+              >
+                <div className="w-12 h-12 bg-sky-100 rounded-lg mb-4 group-hover:bg-sky-200 transition-colors duration-200 flex items-center justify-center">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-sky-600 transition-colors duration-200">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-sky-600 transition-colors duration-200">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

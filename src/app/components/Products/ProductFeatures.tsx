@@ -2,9 +2,43 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 
 const ProductFeatures: React.FC = () => {
   const { t } = useLanguage();
+  const { elementRef: titleRef, animationClasses: titleAnimationClasses } = useScrollAnimation({ delay: 0.5 });
+  
+  // Create animation hooks for features at the top level
+  const { elementRef: feature1Ref, animationClasses: feature1AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 1 
+  });
+  const { elementRef: feature2Ref, animationClasses: feature2AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 2 
+  });
+  const { elementRef: feature3Ref, animationClasses: feature3AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 3 
+  });
+  const { elementRef: feature4Ref, animationClasses: feature4AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 4 
+  });
+  const { elementRef: feature5Ref, animationClasses: feature5AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 5 
+  });
+  const { elementRef: feature6Ref, animationClasses: feature6AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 6 
+  });
 
   const features = [
     {
@@ -66,7 +100,10 @@ const ProductFeatures: React.FC = () => {
   return (
     <section className="py-12 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${titleAnimationClasses}`}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             {t('product.features.title')}
           </h2>
@@ -77,15 +114,24 @@ const ProductFeatures: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <div key={index} className="bg-white rounded-lg p-6 shadow-sm border border-sky-100 hover:shadow-md transition-shadow duration-200">
-              <div className="w-16 h-16 bg-sky-600 rounded-lg flex items-center justify-center mb-4">
-                {feature.icon}
+          {features.map((feature, index) => {
+            const featureRefs = [feature1Ref, feature2Ref, feature3Ref, feature4Ref, feature5Ref, feature6Ref];
+            const featureAnimationClasses = [feature1AnimationClasses, feature2AnimationClasses, feature3AnimationClasses, feature4AnimationClasses, feature5AnimationClasses, feature6AnimationClasses];
+            
+            return (
+              <div 
+                key={index} 
+                ref={featureRefs[index]}
+                className={`bg-white rounded-lg p-6 shadow-sm border border-sky-100 hover:shadow-md transition-all duration-1000 ease-out ${featureAnimationClasses[index]}`}
+              >
+                <div className="w-16 h-16 bg-sky-600 rounded-lg flex items-center justify-center mb-4">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

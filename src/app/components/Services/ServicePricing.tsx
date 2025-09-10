@@ -2,10 +2,34 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import ServiceCard from './ServiceCard';
 
 const ServicePricing: React.FC = () => {
   const { t } = useLanguage();
+  const { elementRef: titleRef, animationClasses: titleAnimationClasses } = useScrollAnimation({ delay: 0.5 });
+  
+  // Create animation hooks for service cards at the top level
+  const { elementRef: card1Ref, animationClasses: card1AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 1 
+  });
+  const { elementRef: card2Ref, animationClasses: card2AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 2 
+  });
+  const { elementRef: card3Ref, animationClasses: card3AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 3 
+  });
+  const { elementRef: ctaRef, animationClasses: ctaAnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 4 
+  });
 
   const services = [
     {
@@ -65,7 +89,10 @@ const ServicePricing: React.FC = () => {
   return (
     <section className="py-12 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${titleAnimationClasses}`}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             {t('service.pricing.title')}
           </h2>
@@ -76,20 +103,33 @@ const ServicePricing: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <ServiceCard
-              key={index}
-              icon={service.icon}
-              title={service.title}
-              description={service.description}
-              features={service.features}
-              price={service.price}
-              isPopular={service.isPopular}
-            />
-          ))}
+          {services.map((service, index) => {
+            const cardRefs = [card1Ref, card2Ref, card3Ref];
+            const cardAnimationClasses = [card1AnimationClasses, card2AnimationClasses, card3AnimationClasses];
+            
+            return (
+              <div 
+                key={index}
+                ref={cardRefs[index]}
+                className={`transition-all duration-1000 ease-out ${cardAnimationClasses[index]}`}
+              >
+                <ServiceCard
+                  icon={service.icon}
+                  title={service.title}
+                  description={service.description}
+                  features={service.features}
+                  price={service.price}
+                  isPopular={service.isPopular}
+                />
+              </div>
+            );
+          })}
         </div>
         
-        <div className="text-center mt-12">
+        <div 
+          ref={ctaRef}
+          className={`text-center mt-12 transition-all duration-1000 ease-out ${ctaAnimationClasses}`}
+        >
           <p className="text-gray-600 mb-6">{t('service.pricing.note')}</p>
           <button className="bg-sky-600 hover:bg-sky-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200">
             {t('service.pricing.contact')}

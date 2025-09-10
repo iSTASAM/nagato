@@ -2,9 +2,38 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 
 const ProductProcess: React.FC = () => {
   const { t } = useLanguage();
+  const { elementRef: titleRef, animationClasses: titleAnimationClasses } = useScrollAnimation({ delay: 0.5 });
+  
+  // Create animation hooks for process steps at the top level
+  const { elementRef: step1Ref, animationClasses: step1AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 1 
+  });
+  const { elementRef: step2Ref, animationClasses: step2AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 2 
+  });
+  const { elementRef: step3Ref, animationClasses: step3AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 3 
+  });
+  const { elementRef: step4Ref, animationClasses: step4AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 4 
+  });
+  const { elementRef: step5Ref, animationClasses: step5AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.2, 
+    index: 5 
+  });
 
   const processSteps = [
     {
@@ -62,7 +91,10 @@ const ProductProcess: React.FC = () => {
   return (
     <section className="py-12 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${titleAnimationClasses}`}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             {t('product.process.title')}
           </h2>
@@ -77,26 +109,34 @@ const ProductProcess: React.FC = () => {
           <div className="hidden lg:block absolute top-16 left-0 right-0 h-0.5 bg-sky-200"></div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            {processSteps.map((step, index) => (
-              <div key={index} className="relative">
-                {/* Connection line for mobile/tablet */}
-                <div className="lg:hidden absolute top-8 left-1/2 w-0.5 h-8 bg-sky-200 transform -translate-x-1/2"></div>
-                
-                <div className="text-center">
-                  <div className="relative mb-6">
-                    <div className="w-16 h-16 bg-white border-4 border-sky-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
-                      {step.icon}
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                      {step.step}
-                    </div>
-                  </div>
+            {processSteps.map((step, index) => {
+              const stepRefs = [step1Ref, step2Ref, step3Ref, step4Ref, step5Ref];
+              const stepAnimationClasses = [step1AnimationClasses, step2AnimationClasses, step3AnimationClasses, step4AnimationClasses, step5AnimationClasses];
+              
+              return (
+                <div key={index} className="relative">
+                  {/* Connection line for mobile/tablet */}
+                  <div className="lg:hidden absolute top-8 left-1/2 w-0.5 h-8 bg-sky-200 transform -translate-x-1/2"></div>
                   
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{step.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                  <div 
+                    ref={stepRefs[index]}
+                    className={`text-center transition-all duration-1000 ease-out ${stepAnimationClasses[index]}`}
+                  >
+                    <div className="relative mb-6">
+                      <div className="w-16 h-16 bg-white border-4 border-sky-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                        {step.icon}
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-sky-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                        {step.step}
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{step.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

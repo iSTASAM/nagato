@@ -2,9 +2,33 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 
 const AboutPreview: React.FC = () => {
   const { t } = useLanguage();
+  const { elementRef, animationClasses } = useScrollAnimation({ delay: 0.5 });
+  
+  // Create animation hooks for stats at the top level
+  const { elementRef: stat1Ref, animationClasses: stat1AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 1 
+  });
+  const { elementRef: stat2Ref, animationClasses: stat2AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 2 
+  });
+  const { elementRef: stat3Ref, animationClasses: stat3AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 3 
+  });
+  const { elementRef: stat4Ref, animationClasses: stat4AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 4 
+  });
 
   const stats = [
     { number: "500+", label: t('home.about.stats.customers') },
@@ -18,7 +42,10 @@ const AboutPreview: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <div>
+          <div 
+            ref={elementRef}
+            className={`transition-all duration-1000 ease-out ${animationClasses}`}
+          >
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               {t('home.about.title')}
             </h2>
@@ -35,19 +62,25 @@ const AboutPreview: React.FC = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 gap-8">
-            {stats.map((stat, index) => (
-              <div 
-                key={index}
-                className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-200"
-              >
-                <div className="text-3xl font-bold text-sky-600 mb-2">
-                  {stat.number}
+            {stats.map((stat, index) => {
+              const statRefs = [stat1Ref, stat2Ref, stat3Ref, stat4Ref];
+              const statAnimationClasses = [stat1AnimationClasses, stat2AnimationClasses, stat3AnimationClasses, stat4AnimationClasses];
+              
+              return (
+                <div 
+                  key={index}
+                  ref={statRefs[index]}
+                  className={`bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-all duration-1000 ease-out ${statAnimationClasses[index]}`}
+                >
+                  <div className="text-3xl font-bold text-sky-600 mb-2">
+                    {stat.number}
+                  </div>
+                  <div className="text-gray-600 font-medium">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-gray-600 font-medium">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

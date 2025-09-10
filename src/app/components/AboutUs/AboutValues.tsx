@@ -2,9 +2,48 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 
 const AboutValues: React.FC = () => {
   const { t } = useLanguage();
+  const { elementRef: titleRef, animationClasses: titleAnimationClasses } = useScrollAnimation({ delay: 0.5 });
+  
+  // Create animation hooks for values at the top level
+  const { elementRef: value1Ref, animationClasses: value1AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 1 
+  });
+  const { elementRef: value2Ref, animationClasses: value2AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 2 
+  });
+  const { elementRef: value3Ref, animationClasses: value3AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 3 
+  });
+  const { elementRef: value4Ref, animationClasses: value4AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 4 
+  });
+  const { elementRef: value5Ref, animationClasses: value5AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 5 
+  });
+  const { elementRef: value6Ref, animationClasses: value6AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 6 
+  });
+  const { elementRef: commitmentRef, animationClasses: commitmentAnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 7 
+  });
 
   const values = [
     {
@@ -66,7 +105,10 @@ const AboutValues: React.FC = () => {
   return (
     <section className="py-12 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${titleAnimationClasses}`}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('about.values.title')}</h2>
           <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -75,20 +117,31 @@ const AboutValues: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {values.map((value, index) => (
-            <div key={index} className="group">
-              <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-lg p-8 h-full border border-sky-100 hover:shadow-lg transition-all duration-300 hover:border-sky-200">
-                <div className="w-16 h-16 bg-sky-600 rounded-lg flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
-                  {value.icon}
+          {values.map((value, index) => {
+            const valueRefs = [value1Ref, value2Ref, value3Ref, value4Ref, value5Ref, value6Ref];
+            const valueAnimationClasses = [value1AnimationClasses, value2AnimationClasses, value3AnimationClasses, value4AnimationClasses, value5AnimationClasses, value6AnimationClasses];
+            
+            return (
+              <div key={index} className="group">
+                <div 
+                  ref={valueRefs[index]}
+                  className={`bg-gradient-to-br from-sky-50 to-sky-100 rounded-lg p-8 h-full border border-sky-100 hover:shadow-lg transition-all duration-1000 ease-out hover:border-sky-200 ${valueAnimationClasses[index]}`}
+                >
+                  <div className="w-16 h-16 bg-sky-600 rounded-lg flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                    {value.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{value.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{value.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">{value.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{value.description}</p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         
-        <div className="mt-16 bg-gradient-to-r from-sky-600 to-sky-700 rounded-2xl p-8 text-center text-white">
+        <div 
+          ref={commitmentRef}
+          className={`mt-16 bg-gradient-to-r from-sky-600 to-sky-700 rounded-2xl p-8 text-center text-white transition-all duration-1000 ease-out ${commitmentAnimationClasses}`}
+        >
           <h3 className="text-2xl font-bold mb-4">{t('about.values.commitment.title')}</h3>
           <p className="text-lg opacity-90 max-w-3xl mx-auto leading-relaxed">
             {t('about.values.commitment.desc')}

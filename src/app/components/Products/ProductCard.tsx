@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useLanguage } from '../../contexts/LanguageContext';
 
 interface ProductCardProps {
   icon: React.ReactNode;

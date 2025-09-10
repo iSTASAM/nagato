@@ -2,10 +2,44 @@
 
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import ProductCard from './ProductCard';
 
 const ProductShowcase: React.FC = () => {
   const { t } = useLanguage();
+  const { elementRef: titleRef, animationClasses: titleAnimationClasses } = useScrollAnimation({ delay: 0.5 });
+  
+  // Create animation hooks for treatment cards at the top level
+  const { elementRef: card1Ref, animationClasses: card1AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 1 
+  });
+  const { elementRef: card2Ref, animationClasses: card2AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 2 
+  });
+  const { elementRef: card3Ref, animationClasses: card3AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 3 
+  });
+  const { elementRef: card4Ref, animationClasses: card4AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 4 
+  });
+  const { elementRef: card5Ref, animationClasses: card5AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 5 
+  });
+  const { elementRef: card6Ref, animationClasses: card6AnimationClasses } = useScrollAnimation({ 
+    delay: 0.5, 
+    staggerDelay: 0.15, 
+    index: 6 
+  });
 
   const heatTreatmentTypes = [
     {
@@ -115,7 +149,10 @@ const ProductShowcase: React.FC = () => {
   return (
     <section className="py-12 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-16 transition-all duration-1000 ease-out ${titleAnimationClasses}`}
+        >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             {t('product.showcase.title')}
           </h2>
@@ -126,17 +163,27 @@ const ProductShowcase: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {heatTreatmentTypes.map((treatment, index) => (
-            <ProductCard
-              key={index}
-              icon={treatment.icon}
-              title={treatment.title}
-              description={treatment.description}
-              features={treatment.features}
-              temperature={treatment.temperature}
-              duration={treatment.duration}
-            />
-          ))}
+          {heatTreatmentTypes.map((treatment, index) => {
+            const cardRefs = [card1Ref, card2Ref, card3Ref, card4Ref, card5Ref, card6Ref];
+            const cardAnimationClasses = [card1AnimationClasses, card2AnimationClasses, card3AnimationClasses, card4AnimationClasses, card5AnimationClasses, card6AnimationClasses];
+            
+            return (
+              <div 
+                key={index}
+                ref={cardRefs[index]}
+                className={`transition-all duration-1000 ease-out ${cardAnimationClasses[index]}`}
+              >
+                <ProductCard
+                  icon={treatment.icon}
+                  title={treatment.title}
+                  description={treatment.description}
+                  features={treatment.features}
+                  temperature={treatment.temperature}
+                  duration={treatment.duration}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
