@@ -11,7 +11,7 @@ interface UseScrollAnimationOptions {
 }
 
 export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
-  const { delay = 0.5, threshold = 0.1, triggerOnce = true, staggerDelay = 0.1, index = 0 } = options;
+  const { delay = 1, threshold = 0.1, triggerOnce = true, staggerDelay = 0.1, index = 0 } = options;
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);

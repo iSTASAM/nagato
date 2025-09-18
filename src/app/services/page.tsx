@@ -1,15 +1,15 @@
 'use client';
 
-import React from 'react';
-import { ServiceHero, ServiceFeatures, ServiceProcess, ServicePricing } from '../components/Services';
+import React, { useEffect } from 'react';
+import { ServiceHero } from '../components/Services';
 
 const ServicePage: React.FC = () => {
+  useEffect(() => {
+    document.title = "Nagato Heat Treatment (Thailand) - Services";
+  }, []);
   return (
     <div className="min-h-screen">
       <ServiceHero />
-      <ServiceFeatures />
-      <ServiceProcess />
-      <ServicePricing />
     </div>
   );
 };

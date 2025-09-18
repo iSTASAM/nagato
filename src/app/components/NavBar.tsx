@@ -1,9 +1,10 @@
+// src/app/components/NavBar.tsx
 'use client';
 
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaBars, FaTimes, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { FaBars, FaTimes, FaPhone } from 'react-icons/fa';
 import { MdLanguage } from 'react-icons/md';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -20,16 +21,17 @@ export default function NavBar() {
     setIsLanguageMenuOpen(!isLanguageMenuOpen);
   };
 
-  const handleLanguageChange = (lang: 'th' | 'en' | 'jp') => {
+  const handleLanguageChange = (lang: 'th' | 'en' | 'jp' | 'cn') => {
     setLanguage(lang);
     setIsLanguageMenuOpen(false);
+    // ระบบจะจัดการ URL และ localStorage อัตโนมัติผ่าน LanguageContext
   };
 
   const menuItems = [
     { name: t('nav.home'), href: '/', key: 'nav.home' },
     { name: t('nav.about'), href: '/about', key: 'nav.about' },
     { name: t('nav.services'), href: '/services', key: 'nav.services' },
-    { name: t('nav.products'), href: '/products', key: 'nav.products' },
+    { name: t('nav.inspection'), href: '/InspectionFacility', key: 'nav.inspection' },
     { name: t('nav.contact'), href: '/contact', key: 'nav.contact' },
   ];
 
@@ -37,6 +39,7 @@ export default function NavBar() {
     { code: 'th', name: 'ไทย', flag: '🇹🇭' },
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'jp', name: '日本語', flag: '🇯🇵' },
+    { code: 'cn', name: '中文', flag: '🇨🇳' },
   ];
 
   return (
@@ -45,14 +48,10 @@ export default function NavBar() {
       <div className="bg-sky-600 text-white py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center">
               <div className="flex items-center space-x-2">
                 <FaPhone className="text-xs" />
                 <span>{t('nav.phone')}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FaEnvelope className="text-xs" />
-                <span>{t('nav.email')}</span>
               </div>
             </div>
             <div className="hidden md:block">
@@ -64,16 +63,16 @@ export default function NavBar() {
 
       {/* Main Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
               <Image
                 src="/img/brand/logo.jpg"
                 alt="Company Logo"
-                width={120}
-                height={40}
-                className="h-10 w-auto object-contain"
+                width={150}
+                height={50}
+                className="h-12 w-auto object-contain"
                 priority
               />
             </Link>
@@ -109,7 +108,7 @@ export default function NavBar() {
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code as 'th' | 'en' | 'jp')}
+                    onClick={() => handleLanguageChange(lang.code as 'th' | 'en' | 'jp' | 'cn')}
                     className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors duration-200 flex items-center space-x-2 ${
                       language === lang.code ? 'bg-sky-50 text-sky-600' : 'text-gray-700'
                     }`}
@@ -140,7 +139,7 @@ export default function NavBar() {
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => handleLanguageChange(lang.code as 'th' | 'en' | 'jp')}
+                      onClick={() => handleLanguageChange(lang.code as 'th' | 'en' | 'jp' | 'cn')}
                       className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 transition-colors duration-200 flex items-center space-x-2 ${
                         language === lang.code ? 'bg-sky-50 text-sky-600' : 'text-gray-700'
                       }`}

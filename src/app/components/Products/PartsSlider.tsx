@@ -45,11 +45,6 @@ const PartsSlider: React.FC = () => {
     setCurrentSlide(index);
   };
 
-  const startAutoPlay = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(nextSlide, 4000); // 4 seconds per slide
-  };
-
   const stopAutoPlay = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -59,13 +54,14 @@ const PartsSlider: React.FC = () => {
 
   useEffect(() => {
     if (isAutoPlaying) {
-      startAutoPlay();
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(nextSlide, 4000); // 4 seconds per slide
     } else {
       stopAutoPlay();
     }
 
     return () => stopAutoPlay();
-  }, [isAutoPlaying, startAutoPlay]);
+  }, [isAutoPlaying, nextSlide]);
 
   const handleMouseEnter = () => {
     setIsAutoPlaying(false);

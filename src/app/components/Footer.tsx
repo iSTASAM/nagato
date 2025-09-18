@@ -1,8 +1,9 @@
+// src/app/components/Footer.tsx
 'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaLine, FaInstagram, FaYoutube, FaFax } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Footer() {
@@ -17,12 +18,6 @@ export default function Footer() {
     { name: t('nav.contact'), href: '/contact', key: 'nav.contact' },
   ];
 
-  const socialLinks = [
-    { name: 'Facebook', icon: FaFacebook, href: '#' },
-    { name: 'Line', icon: FaLine, href: '#' },
-    { name: 'Instagram', icon: FaInstagram, href: '#' },
-    { name: 'YouTube', icon: FaYoutube, href: '#' },
-  ];
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -33,33 +28,20 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-6">
               <Link href="/" className="flex items-center">
-                <Image
-                  src="/img/brand/logo.jpg"
-                  alt="Company Logo"
-                  width={120}
-                  height={40}
-                  className="h-10 w-auto object-contain"
-                />
+                <div className="bg-white p-2 rounded-lg shadow-md">
+                  <Image
+                    src="/img/brand/logo.jpg"
+                    alt="Company Logo"
+                    width={120}
+                    height={40}
+                    className="h-10 w-auto object-contain"
+                  />
+                </div>
               </Link>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed mb-6">
               {t('footer.company_description')}
             </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => {
-                const IconComponent = social.icon;
-                return (
-                  <Link
-                    key={social.name}
-                    href={social.href}
-                    className="text-gray-400 hover:text-sky-400 transition-colors duration-200"
-                    aria-label={social.name}
-                  >
-                    <IconComponent className="h-5 w-5" />
-                  </Link>
-                );
-              })}
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -94,26 +76,40 @@ export default function Footer() {
               <div className="flex items-center space-x-3">
                 <FaPhone className="text-sky-400 flex-shrink-0" />
                 <Link
-                  href="tel:038027473"
+                  href="tel:0380274734"
                   className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm"
                 >
                   {t('footer.phone')}
                 </Link>
               </div>
-              <div className="flex items-center space-x-3">
-                <FaEnvelope className="text-sky-400 flex-shrink-0" />
-                <Link
-                  href="mailto:info@nagato.co.th"
-                  className="text-gray-300 hover:text-sky-400 transition-colors duration-200 text-sm"
-                >
-                  info@nagato.co.th
-                </Link>
-              </div>
-              <div className="flex items-center space-x-3">
-                <FaFax className="text-sky-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">
-                  {t('footer.fax')}
-                </span>
+              <div className="flex items-start space-x-3">
+                <FaEnvelope className="text-sky-400 mt-1 flex-shrink-0" />
+                <div className="text-gray-300 text-sm space-y-1">
+                  <div>
+                    <Link
+                      href="mailto:mimura@nagatothai.com"
+                      className="hover:text-sky-400 transition-colors duration-200"
+                    >
+                      mimura@nagatothai.com
+                    </Link>
+                  </div>
+                  <div>
+                    <Link
+                      href="mailto:asanuma@nagatothai.com"
+                      className="hover:text-sky-400 transition-colors duration-200"
+                    >
+                      asanuma@nagatothai.com
+                    </Link>
+                  </div>
+                  <div>
+                    <Link
+                      href="mailto:thasana@nagatothai.com"
+                      className="hover:text-sky-400 transition-colors duration-200"
+                    >
+                      thasana@nagatothai.com
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

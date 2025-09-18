@@ -9,8 +9,14 @@ import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 const HeroSection: React.FC = () => {
   const { t } = useLanguage();
   const [showMouseIcon, setShowMouseIcon] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { elementRef: titleRef, animationClasses: titleAnimationClasses } = useScrollAnimation({ delay: 0.5 });
-  const { elementRef: descRef, animationClasses: descAnimationClasses } = useScrollAnimation({ delay: 0.5, staggerDelay: 0.2, index: 1 });
+
+  // Background images array
+  const backgroundImages = [
+    '/img/home/BG-Nagato.jpg',
+    '/img/home/BG-Nagato2.jpg'
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,35 +29,56 @@ const HeroSection: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Auto-slide background images every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [backgroundImages.length]);
+
   return (
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Full-screen background image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
-        style={{
-          backgroundImage: 'url(/img/home/heat-treating-steel-gears.jpg)'
-        }}
-      />
+      {/* Full-screen background images with smooth transitions */}
+      {backgroundImages.map((image, index) => (
+        <div 
+          key={index}
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed transition-opacity duration-1000 ease-in-out ${
+            index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{
+            backgroundImage: `url(${image})`
+          }}
+        />
+      ))}
       
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-600/80 to-sky-900/90" />
+      {/* Gradient overlay with maximum dark opacity */}
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-600/95 to-sky-900/95" />
       
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="text-center">
           <h1 
             ref={titleRef}
-            className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight transition-all duration-1000 ease-out ${titleAnimationClasses}`}
+            className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight transition-all duration-1000 ease-out drop-shadow-2xl font-extrabold tracking-wide break-words hyphens-auto ${titleAnimationClasses}`}
           >
-            {t('home.hero.title')}
-            <span className="text-sky-200 block mt-2 sm:mt-4">{t('home.hero.subtitle')}</span>
+            {t('home.hero.subtitle')}
           </h1>
-          <p 
-            ref={descRef}
-            className={`text-base sm:text-lg md:text-xl lg:text-2xl text-sky-100 mb-6 sm:mb-8 max-w-2xl sm:max-w-3xl lg:max-w-4xl mx-auto leading-relaxed px-2 transition-all duration-1000 ease-out ${descAnimationClasses}`}
-          >
-            {t('home.hero.description')}
-          </p>
+          {t('home.hero.description') && (
+            <div className="max-w-4xl mx-auto">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 leading-relaxed drop-shadow-lg">
+                {t('home.hero.description').split('\\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index < t('home.hero.description').split('\\n').length - 1 && <br />}
+                  </span>
+                ))}
+              </p>
+            </div>
+          )}
         </div>
       </div>
       
@@ -65,7 +92,7 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
           <span className="text-xs sm:text-sm font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            Scroll
+            {t('home.hero.scroll')}
           </span>
         </div>
       )}

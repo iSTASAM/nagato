@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import BacktoTop from "./components/BacktoTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +18,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Your Company - High Quality Services",
-  description: "Our company is committed to providing the highest quality services with professional teams and modern technology.",
+  title: "Nagato Heat Treatment (Thailand)",
+  description: "Nagato Heat Treatment (Thailand)",
+  icons: {
+    icon: '/img/brand/logo.jpg',
+    shortcut: '/img/brand/logo.jpg',
+    apple: '/img/brand/logo.jpg',
+  },
 };
 
 export default function RootLayout({
@@ -31,14 +37,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LanguageProvider>
-          <NavBar />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <BacktoTop />
-        </LanguageProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <LanguageProvider>
+            <NavBar />
+            <main className="min-h-screen">
+              {children}
+            </main>
+            <Footer />
+            <BacktoTop />
+          </LanguageProvider>
+        </Suspense>
       </body>
     </html>
   );

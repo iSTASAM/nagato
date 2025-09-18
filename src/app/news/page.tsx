@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { MdArrowBack, MdCalendarToday, MdCategory, MdClose } from 'react-icons/md';
@@ -22,6 +22,10 @@ const NewsPage: React.FC = () => {
   const { elementRef, animationClasses } = useScrollAnimation({ delay: 0.5 });
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    document.title = "Nagato Heat Treatment (Thailand) - News";
+  }, []);
   
   // Create animation hooks for news cards at the top level
   const { elementRef: news1Ref, animationClasses: news1AnimationClasses } = useScrollAnimation({ 
