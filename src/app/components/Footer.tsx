@@ -84,31 +84,13 @@ export default function Footer() {
               </div>
               <div className="flex items-start space-x-3">
                 <FaEnvelope className="text-sky-400 mt-1 flex-shrink-0" />
-                <div className="text-gray-300 text-sm space-y-1">
-                  <div>
-                    <Link
-                      href="mailto:mimura@nagatothai.com"
-                      className="hover:text-sky-400 transition-colors duration-200"
-                    >
-                      mimura@nagatothai.com
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      href="mailto:asanuma@nagatothai.com"
-                      className="hover:text-sky-400 transition-colors duration-200"
-                    >
-                      asanuma@nagatothai.com
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      href="mailto:thasana@nagatothai.com"
-                      className="hover:text-sky-400 transition-colors duration-200"
-                    >
-                      thasana@nagatothai.com
-                    </Link>
-                  </div>
+                <div className="text-gray-300 text-sm">
+                  <Link
+                    href="mailto:info@nagatothai.com"
+                    className="hover:text-sky-400 transition-colors duration-200"
+                  >
+                    info@nagatothai.com
+                  </Link>
                 </div>
               </div>
             </div>
@@ -136,23 +118,9 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm mb-4 md:mb-0">
+          <div className="flex justify-center items-center">
+            <div className="text-gray-400 text-sm">
               © {currentYear} {t('footer.copyright')}
-            </div>
-            <div className="flex space-x-6 text-sm">
-              <Link
-                href="/privacy"
-                className="text-gray-400 hover:text-sky-400 transition-colors duration-200"
-              >
-                {t('footer.privacy')}
-              </Link>
-              <Link
-                href="/terms"
-                className="text-gray-400 hover:text-sky-400 transition-colors duration-200"
-              >
-                {t('footer.terms')}
-              </Link>
             </div>
           </div>
         </div>

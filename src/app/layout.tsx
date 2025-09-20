@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   title: "Nagato Heat Treatment (Thailand)",
   description: "Nagato Heat Treatment (Thailand)",
   icons: {
-    icon: '/img/brand/logo.jpg',
-    shortcut: '/img/brand/logo.jpg',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
     apple: '/img/brand/logo.jpg',
   },
 };
@@ -34,6 +34,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/img/brand/logo.jpg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/img/brand/logo.jpg" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
